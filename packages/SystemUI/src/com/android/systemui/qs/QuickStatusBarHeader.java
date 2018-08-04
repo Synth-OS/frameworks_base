@@ -123,6 +123,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     public static final String STATUS_BAR_CUSTOM_HEADER =
             "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER;
+    private static final String STATUS_BAR_CLOCK =
+            "system:" + Settings.System.STATUS_BAR_CLOCK;
 
     private final NextAlarmController mAlarmController;
     private final ZenModeController mZenController;
@@ -315,7 +317,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         Dependency.get(TunerService.class).addTunable(this,
                 StatusBarIconController.ICON_BLACKLIST,
-                STATUS_BAR_CUSTOM_HEADER);
+                STATUS_BAR_CUSTOM_HEADER,
+                STATUS_BAR_CLOCK);
     }
 
     public QuickQSPanel getHeaderQsPanel() {
@@ -851,12 +854,18 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (STATUS_BAR_CUSTOM_HEADER.equals(key)) {
-            mHeaderImageEnabled = TunerService.parseIntegerSwitch(newValue, false);
-            updateResources();
-        } else if (StatusBarIconController.ICON_BLACKLIST.equals(key)) {
-            mClockView.setClockVisibleByUser(!StatusBarIconController.getIconBlacklist(
-                    mContext, newValue).contains("clock"));
+        switch (key) {
+            case STATUS_BAR_CUSTOM_HEADER:
+                mHeaderImageEnabled = TunerService.parseIntegerSwitch(newValue, false);
+                updateResources();
+                break;
+            case STATUS_BAR_CLOCK:
+                int showClock =
+                        TunerService.parseInteger(newValue, CLOCK_POSITION_LEFT);
+                mClockView.setClockVisibleByUser(showClock != CLOCK_POSITION_HIDE);
+                break;
+            default:
+                break;
         }
     }
 }
