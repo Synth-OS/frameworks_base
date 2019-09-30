@@ -17,11 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="clock_title_type_centered">Текст (по центру)</string>
     <string name="clock_title_default_bold">Стандартный (жирный)</string>
-    <string name="clock_title_samsung" translatable="false">Samsung</string>
     <string name="clock_title_samsung_bold">Samsung (жирный)</string>
     <string name="clock_title_samsung_accent">Samsung (цветной)</string>
-    <string name="clock_title_mnml_box" translatable="false">MNML\'s Box</string>
-    <string name="clock_title_mnml_minimal" translatable="false">MNML\'s Minimal</string>
     <string name="date_long_title_today">Сегодня %s</string>
     <!-- Clock required strings -->
     <string name="gradient_fire_clock_title">Gradient Fire</string>
@@ -33,11 +30,138 @@
     <string name="custom_clock_month_title">Месяц</string>
     <string name="custom_clock_year_title">Год</string>
     <string name="ide_java_comment">Покажите дату в кои-то веки, пользователю любопытно</string>
-    <string name="gradient_fire_bottom_text" formatted="false" translatable="false">家 • %1$s</string>
     <string name="salute_fallback">Привет</string>
     <string name="salute_morning">Доброе утро</string>
     <string name="salute_afternoon">Добрый день</string>
     <string name="salute_evening">Добрый вечер</string>
     <string name="salute_night">Доброй ночи</string>
     <string name="salute_sleep">Время спать</string>
+
+    <!-- Time displayed on typographic clock face, which displays the time in words.
+             Example:
+
+                 It's
+                 Four
+                 Twenty
+                 Nine
+
+         This string requires two arguments: the first in the hours of the time and
+         the second is the minutes of the time. The hours string is obtained from
+         string-array type_clock_hours below and the minutes string is obtained
+         from string-array type_clock_minutes below.
+
+    [CHAR LIMIT=8] -->
+    <plurals name="type_clock_header">
+        <item quantity="one"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="few"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+        <item quantity="other"><annotation name="color">Сейчас</annotation>\n^1\n^2</item>
+    </plurals>
+
+    <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
+    <string-array name="type_clock_hours_12">
+        <item>Двенадцать</item>
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+        <item>Пять</item>
+        <item>Шесть</item>
+        <item>Семь</item>
+        <item>Восемь</item>
+        <item>Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+    </string-array>
+
+    <string-array name="type_clock_hours_24">
+        <item>Ноль</item>
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+        <item>Пять</item>
+        <item>Шесть</item>
+        <item>Семь</item>
+        <item>Восемь</item>
+        <item>Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+        <item>Двенадцать</item>
+        <item>Тринадцать</item>
+        <item>Четырнадцать</item>
+        <item>Пятнадцать</item>
+        <item>Шестнадцать</item>
+        <item>Семнадцать</item>
+        <item>Восемнадцать</item>
+        <item>Девятнадцать</item>
+        <item>Двадцать</item>
+        <item>Двадцать Один</item>
+        <item>Двадцать Два</item>
+        <item>Двадцать Три</item>
+        <item>Двадцать Четыре</item>
+    </string-array>
+
+    <!-- Minutes displayed in words on the typographic clock face. [CHAR LIMIT=20] -->
+    <string-array name="type_clock_minutes">
+        <item>Ноль Ноль</item>
+        <item>Ноль Один</item>
+        <item>Ноль Два</item>
+        <item>Ноль Три</item>
+        <item>Ноль Четыре</item>
+        <item>Ноль Пять</item>
+        <item>Ноль Шесть</item>
+        <item>Ноль Семь</item>
+        <item>Ноль Восемь</item>
+        <item>Ноль Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+        <item>Двенадцать</item>
+        <item>Тринадцать</item>
+        <item>Четырнадцать</item>
+        <item>Пятнадцать</item>
+        <item>Шестнадцать</item>
+        <item>Семнадцать</item>
+        <item>Восемнадцать</item>
+        <item>Девятнадцать</item>
+        <item>Двадцать</item>
+        <item>Двадцать Один</item>
+        <item>Двадцать Два</item>
+        <item>Двадцать Три</item>
+        <item>Двадцать Четыре</item>
+        <item>Двадцать Пять</item>
+        <item>Двадцать Шесть</item>
+        <item>Двадцать Семь</item>
+        <item>Двадцать Восемь</item>
+        <item>Двадцать Девять</item>
+        <item>Тридцать</item>
+        <item>Тридцать Один</item>
+        <item>Тридцать Два</item>
+        <item>Тридцать Три</item>
+        <item>Тридцать Четыре</item>
+        <item>Тридцать Пять</item>
+        <item>Тридцать Шесть</item>
+        <item>Тридцать Семь</item>
+        <item>Тридцать Восемь</item>
+        <item>Тридцать Девять</item>
+        <item>Сорок</item>
+        <item>Сорок Один</item>
+        <item>Сорок Два</item>
+        <item>Сорок Три</item>
+        <item>Сорок Четыре</item>
+        <item>Сорок Пять</item>
+        <item>Сорок Шесть</item>
+        <item>Сорок Семь</item>
+        <item>Сорок Восемь</item>
+        <item>Сорок Девять</item>
+        <item>Пятьдесят</item>
+        <item>Пятьдесят Один</item>
+        <item>Пятьдесят Два</item>
+        <item>Пятьдесят Три</item>
+        <item>Пятьдесят Четыре</item>
+        <item>Пятьдедят Пять</item>
+        <item>Пятьдесят Шесть</item>
+        <item>Пятьдесят Семь</item>
+        <item>Пятьдесят Восемь</item>
+        <item>Пятьдесят Девять</item>
+    </string-array>
 </resources>
