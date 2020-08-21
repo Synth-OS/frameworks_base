@@ -6398,6 +6398,18 @@ public final class Settings {
         public static final String AMBIENT_HIDE_KEYGUARD = "ambient_hide_keyguard";
 
         /**
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String QS_PANEL_TYPE_BACKGROUND = "qs_panel_type_background";
+
+        /** @hide */
+        public static final String QS_PANEL_CUSTOM_IMAGE = "qs_panel_custom_image";
+
+        /** @hide */
+        public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6550,6 +6562,11 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
             PRIVATE_SETTINGS.add(INCALL_FEEDBACK_VIBRATE);
             PRIVATE_SETTINGS.add(EDGE_MUSIC_CONTROL);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+            PRIVATE_SETTINGS.add(QS_PANEL_TYPE_BACKGROUND);
+            PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE);
+            PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE_BLUR);
         }
 
         /**

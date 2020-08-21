@@ -4063,4 +4063,10 @@
 
   <!-- For dynamic default font styles -->
   <java-symbol type="string" name="config_bodyFontFamily" />
+
+  <!-- QS Inset -->
+  <java-symbol type="dimen" name="qs_background_inset" />
+
+  <java-symbol type="attr" name="colorBackgroundFloating" />
+
 </resources>
