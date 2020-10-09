@@ -28,4 +28,9 @@
          User can define this in settings
          Here for reference-->
     <color name="config_pulseFillColor">#92ffffff</color>
+
+    <!-- Clear all notifications button -->
+    <color name="dismiss_all_background_color">@android:color/white</color>
+    <color name="dismiss_all_background_color_ripple">#a8a8a8</color>
+    <color name="dismiss_all_icon_color">#8a000000</color>
 </resources>
