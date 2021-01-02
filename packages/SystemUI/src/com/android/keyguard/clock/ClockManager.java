@@ -173,7 +173,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new StickerTagClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new TypeClockController(res, layoutInflater, colorExtractor, context));
-        addBuiltinClock(() -> new TypeClockCenteredController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new TypeClockCenteredController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TypeAltClockController(res, layoutInflater, colorExtractor));
 
         // Store the size of the display for generation of clock preview.
