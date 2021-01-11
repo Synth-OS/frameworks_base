@@ -222,4 +222,5 @@
     <string name="vpn_credentials_password">Passwort</string>
     <string name="vpn_credentials_dialog_connect">Verbinden</string>
 
+    <string name="photos_not_allowed">Sie versuchen das QS-Panel-Image mit einer inkompatiblen App einzustellen. Bitte nutzen Sie die AOSP Galerie oder eine andere Galerie-App.</string>
 </resources>
