@@ -200,11 +200,21 @@ public class FODCircleView extends ImageView implements TunerService.Tunable, Co
             }
 
             if (dreaming) {
-                mBurnInProtectionTimer = new Timer();
-                mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-            } else if (mBurnInProtectionTimer != null) {
-                mBurnInProtectionTimer.cancel();
-                updatePosition();
+                if (shouldShowOnDoze()) {
+                    mBurnInProtectionTimer = new Timer();
+                    mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
+                } else {
+                    setImageDrawable(null);
+                    invalidate();
+                }
+            } else {
+                if (mBurnInProtectionTimer != null) {
+                    mBurnInProtectionTimer.cancel();
+                    updatePosition();
+                }
+                if (!shouldShowOnDoze()) {
+                    invalidate();
+                }
             }
         }
 
@@ -556,7 +566,11 @@ public class FODCircleView extends ImageView implements TunerService.Tunable, Co
             return;
         }
 
-        mFODIcon.show();
+        if (mIsDreaming && !shouldShowOnDoze()) {
+            setImageDrawable(null);
+        } else {
+            mFODIcon.show();
+        }
         updatePosition();
 
         setVisibility(View.VISIBLE);
@@ -672,6 +686,11 @@ public class FODCircleView extends ImageView implements TunerService.Tunable, Co
         }
 
         return false;
+    }
+
+    private boolean shouldShowOnDoze() {
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.FOD_ON_DOZE, 1) == 1;
     }
 
     private class BurnInProtectionTask extends TimerTask {
