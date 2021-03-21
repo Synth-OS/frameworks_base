@@ -51,6 +51,7 @@ public class DescendantSeamlessClockSwitch {
         "com.android.keyguard.clock.TypeClockController",
         "com.android.keyguard.clock.TypeClockCenteredController",
         "com.android.keyguard.clock.TypeAltClockController"
+        "com.android.keyguard.clock.SyntheticClockController"
     };
 
     public static int getCurrentPosition(String currentClockFace) {

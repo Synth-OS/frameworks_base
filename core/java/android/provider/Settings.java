@@ -6410,6 +6410,24 @@ public final class Settings {
         public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
 
         /**
+         * Synthetic Clock Custom Image
+         * @hide
+         */
+        public static final String SYNTHETIC_CUSTOM_IMAGE = "synthetic_custom_image";
+
+        /**
+         * Synthetic Clock Format
+         * @hide
+         */
+        public static final String SYNTHETIC_CLOCK_FORMAT = "synthetic_clock_format";
+
+        /**
+         * Synthetic Date Format
+         * @hide
+         */
+        public static final String SYNTHETIC_DATE_FORMAT = "synthetic_date_format";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
