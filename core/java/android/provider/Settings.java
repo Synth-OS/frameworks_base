@@ -6239,6 +6239,12 @@ public final class Settings {
         public static final String USE_NEW_SEARCHBAR = "use_new_searchbar";
 
         /**
+         * Enable and disable QS Panel visualizer
+         * @hide
+         */
+        public static final String VISUALIZER_CENTER_MIRRORED = "visualizer_center_mirrored";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -10726,6 +10732,12 @@ public final class Settings {
          * @hide
          */
         public static final String FOD_ON_DOZE = "fod_on_doze";
+
+        /**
+         * Pulse gravity
+         * @hide
+         */
+        public static final String PULSE_CUSTOM_GRAVITY = "pulse_custom_gravity";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
