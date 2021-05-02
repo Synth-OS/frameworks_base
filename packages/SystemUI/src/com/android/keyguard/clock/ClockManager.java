@@ -152,6 +152,8 @@ public final class ClockManager {
         addBuiltinClock(() -> new DefaultClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new DefaultBoldClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new AnalogClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new AndroidSClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new AndroidSDP3ClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new AndroidTwelveClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new BubbleClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new ClockertinoClockController(res, layoutInflater, colorExtractor));
