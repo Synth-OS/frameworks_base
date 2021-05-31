@@ -218,4 +218,7 @@
     <string name="vpn_credentials_password">Passwort</string>
     <string name="vpn_credentials_dialog_connect">Verbinden</string>
 
+    <!-- Sleep Mode -->
+    <string name="quick_settings_sleep_mode_label">Schlafmodus</string>
+
 </resources>
