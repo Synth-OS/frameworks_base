@@ -145,10 +145,13 @@ import android.widget.ImageButton;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
@@ -270,6 +273,7 @@ import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
+import com.android.systemui.synth.ambient.AmbientController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.volume.VolumeComponent;
 
@@ -563,6 +567,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     private ImageButton mDismissAllButton;
     public boolean mClearableNotifications = true;
     public float mQsExpansionFraction = 0f;
+
+    private AmbientController mAmbientController;
+    private TextView mAmbientTextView;
+    private FrameLayout mAmbientContainer;
+    private ConstraintLayout mAmbientTextContainer;
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     @VisibleForTesting
@@ -1212,6 +1221,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                 PowerManager.BRIGHTNESS_CONSTRAINT_TYPE_MINIMUM);
         mMaximumBacklight = pm.getBrightnessConstraint(
                 PowerManager.BRIGHTNESS_CONSTRAINT_TYPE_MAXIMUM);
+
+        mAmbientContainer = mNotificationShadeWindowView.findViewById(R.id.ambient_container);
+        mAmbientTextContainer = mNotificationShadeWindowView.findViewById(R.id.ambient_text_container);
+        mAmbientTextView = mNotificationShadeWindowView.findViewById(R.id.ambient_text);
+        mAmbientController = new AmbientController(context, mAmbientContainer, mAmbientTextContainer, mAmbientTextView, mNotificationPanelViewController);
 
         // TODO: Deal with the ugliness that comes from having some of the statusbar broken out
         // into fragments, but the rest here, it leaves some awkward lifecycle and whatnot.
@@ -4457,6 +4471,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mNotificationPanelViewController.setDozing(mDozing, animate, mWakeUpTouchLocation);
         mPulseController.setDozing(mDozing);
+        mAmbientController.setDozing(mDozing);
         updateQsExpansionEnabled();
 
         if (mAmbientIndicationContainer != null) {
@@ -4597,6 +4612,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateScrimController();
         mPresenter.updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
         mPulseController.setKeyguardShowing(mState == StatusBarState.KEYGUARD);
+        mAmbientController.setKeyguardShowing(mState == StatusBarState.KEYGUARD);
         updateKeyguardState();
 
         ((StatusBarIconControllerImpl) mIconController).setKeyguardShowing(mState == StatusBarState.KEYGUARD);
@@ -4616,6 +4632,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public PulseController getPulseController() {
         return mPulseController;
+    }
+
+    public AmbientController getAmbientController() {
+        return mAmbientController;
     }
 
     @Override

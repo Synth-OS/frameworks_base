@@ -2251,6 +2251,7 @@ public class NotificationPanelViewController extends PanelViewController {
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.updateDismissAllVisibility(true);
         mStatusBar.getPulseController().setQSShowing(mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed());
+        mStatusBar.getAmbientController().setQSShowing(mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed());
     }
 
     private float getFadeoutAlpha() {
@@ -3072,6 +3073,9 @@ public class NotificationPanelViewController extends PanelViewController {
                 Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
         int repeats = Settings.System.getIntForUser(resolver,
                 Settings.System.NOTIFICATION_PULSE_REPEATS, 0, UserHandle.USER_CURRENT);
+        boolean hideAodContent = Settings.System.getIntForUser(resolver,
+                Settings.System.AMBIENT_HIDE_KEYGUARD, 0, UserHandle.USER_CURRENT) == 1;
+        boolean ambientState = mStatusBar.getAmbientController().getState();
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
         }
@@ -3121,14 +3125,14 @@ public class NotificationPanelViewController extends PanelViewController {
                                 UserHandle.USER_CURRENT);
                     }
                 } else {
-                    showAodContent(true);
+                    updateAodContent(ambientState && hideAodContent, true);
                 }
             } else {
                 // continue to pulse - if not screen was turned on in the meantime
                 if (activeNotif && ambientLights && aodEnabled && mDozing && !mPulseLightHandled) {
                     // no-op if pulseLights is also enabled
                     if (ambientLightsHideAod) {
-                        showAodContent(false);
+                        updateAodContent(ambientState && hideAodContent, false);
                     }
                     mPulseLightsView.animateNotificationWithColor(pulseColor);
                     mPulseLightsView.setVisibility(View.VISIBLE);
@@ -3150,6 +3154,10 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         mNotificationStackScroller.setPulsing(pulsing, animatePulse);
         mKeyguardStatusView.setPulsing(pulsing);
+    }
+
+    public void updateAodContent(boolean hideAodContent, boolean pulse) {
+        showAodContent(hideAodContent ? false : pulse);
     }
 
     private void showAodContent(boolean show) {
