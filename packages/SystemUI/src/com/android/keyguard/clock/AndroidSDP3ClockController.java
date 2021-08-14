@@ -175,6 +175,8 @@ public class AndroidSDP3ClockController implements ClockPlugin {
         mClock = mView.findViewById(R.id.clock);
         mClock.setFormat12Hour("hh:mm");
         mClock.setFormat24Hour("kk:mm");
+        mClock.setTextSize(mContext.getResources().getDimensionPixelSize(
+                R.dimen.widget_label_font_size) * 1.5f);
         mClockTypeface = mClock.getTypeface();
 
         mTitle = mView.findViewById(R.id.title);
