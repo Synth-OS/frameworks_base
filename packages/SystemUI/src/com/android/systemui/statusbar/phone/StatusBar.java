@@ -3452,7 +3452,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void haltLyricTicker() {
-        if (mLyricTicker != null && mLyricEnabled) {
+        if (mLyricTicker != null) {
             mLyricTicker.halt();
         }
     }
@@ -5507,6 +5507,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mLyricEnabled =
                     TunerService.parseIntegerSwitch(newValue, false);
                 SystemProperties.set(Zygote.EXTHM_STATUS_BAR_LYRIC_PROP, mLyricEnabled ? "true" : "false");
+                if (mLyricEnabled == false) {
+                    haltLyricTicker();
+                }
                 break;
             case STATUS_BAR_TICKER_ANIMATION_MODE:
                 mTickerAnimationMode =
