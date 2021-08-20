@@ -49,6 +49,7 @@ import android.widget.TextView;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.graphics.ColorUtils;
 import com.android.internal.util.Converter;
+import com.android.internal.util.derp.derpUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
@@ -431,15 +432,18 @@ public class AndroidSDP3ClockController implements ClockPlugin {
     private void updateTextColors() {
         final int blendedColor = getTextColor();
         final int secondary = mPalette.getSecondaryColor();
-        mTitle.setTextColor(blendedColor);
+        final int accentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+        final boolean useAccent = derpUtils.useLockscreenClockAccentColor(mContext);
+
+        mTitle.setTextColor(useAccent ? accentColor : blendedColor);
         int childCount = mRow.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View v = mRow.getChildAt(i);
             if (v instanceof TextView) {
-                ((TextView) v).setTextColor(blendedColor);
+                ((TextView) v).setTextColor(useAccent ? accentColor : blendedColor);
             }
         }
-        mClock.setTextColor(secondary);
+        mClock.setTextColor(useAccent ? accentColor : secondary);
     }
 
     int getTextColor() {
