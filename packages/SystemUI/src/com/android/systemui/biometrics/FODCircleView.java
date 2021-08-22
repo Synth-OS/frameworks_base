@@ -524,6 +524,9 @@ public class FODCircleView extends ImageView implements TunerService.Tunable, Co
         updatePosition();
         invalidate();
         if (mFODAnimation != null && mIsRecognizingAnimEnabled) {
+            if (mIsDreaming) {
+                updatePosition();
+            }
             mFODAnimation.showFODanimation();
         }
     }
