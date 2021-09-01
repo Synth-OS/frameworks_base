@@ -45,6 +45,8 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.Region.Op;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -668,6 +670,8 @@ public class NavigationBarView extends FrameLayout implements
 
         updateRecentsIcon();
 
+        final boolean mShowIMESpace = getShowIMESpace();
+
         // Update IME button visibility, a11y and rotate button always overrides the appearance
         mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher,
                 (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0);
@@ -684,8 +688,8 @@ public class NavigationBarView extends FrameLayout implements
         boolean disableHomeHandle = disableRecent
                 && ((mDisabledFlags & View.STATUS_BAR_DISABLE_HOME) != 0);
 
-        boolean disableBack = !useAltBack && (mEdgeBackGestureHandler.isHandlingGestures()
-                || ((mDisabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0));
+        boolean disableBack = (isGesturalMode(mNavBarMode) && !mShowIMESpace) || (!useAltBack && (mEdgeBackGestureHandler.isHandlingGestures()
+                || ((mDisabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0)));
 
         // When screen pinning, don't hide back and home when connected service or back and
         // recents buttons when disconnected from launcher service in screen pinning mode,
@@ -1337,4 +1341,10 @@ public class NavigationBarView extends FrameLayout implements
         mDockedStackExists = exists;
         updateRecentsIcon();
     });
+
+    private boolean getShowIMESpace() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_IME_SPACE, 1,
+                UserHandle.USER_CURRENT) == 1;
+    }
 }
