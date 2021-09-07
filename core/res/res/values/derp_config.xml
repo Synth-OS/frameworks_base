@@ -241,4 +241,7 @@
     <!-- Whether to enable OnePlus Camera hack -->
     <bool name="config_enableOnePlusCameraHack">false</bool>
 
+    <!-- Wheter device supports an gaming mode profiles -->
+    <bool name="config_gamingmode_performance">false</bool>
+
 </resources>
