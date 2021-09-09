@@ -2472,6 +2472,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateRoundedFwvals();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.BERRY_ROUNDED_STYLE))) {
                 updateCorners();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS_MODE))) {
+                setScreenBrightnessMode();
             }
         }
 
