@@ -31,6 +31,7 @@
     <string name="ide_java_comment">Zeigen Sie das Datum einmal an, der Benutzer ist neugierig</string>
     <string name="salute_fallback">Hallo</string>
     <string name="salute_morning">Guten Morgen</string>
+    <string name="salute_afternoon">Guten Tag</string>
     <string name="salute_evening">Guten Abend</string>
     <string name="salute_night">Gute Nacht</string>
 </resources>
