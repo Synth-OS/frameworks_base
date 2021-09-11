@@ -33,5 +33,5 @@
     <string name="salute_morning">Guten Morgen</string>
     <string name="salute_afternoon">Guten Tag</string>
     <string name="salute_evening">Guten Abend</string>
-    <string name="salute_night">Gute Nacht</string>
+    <string name="salute_night">Guten Abend</string>
 </resources>
