@@ -412,6 +412,17 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         }
     }
 
+    void hideScreenshotSelector() {
+        setLockedScreenOrientation(false);
+        if (mScreenshotLayout.getWindowToken() != null) {
+            mWindowManager.removeView(mScreenshotLayout);
+        }
+        mScreenshotSelectorView.stopSelection();
+        mScreenshotSelectorView.setVisibility(View.GONE);
+        mCaptureButton.setVisibility(View.GONE);
+        setBlockedGesturalNavigation(false);
+    }
+
     void setBlockedGesturalNavigation(boolean blocked) {
         IStatusBarService service = IStatusBarService.Stub.asInterface(
                 ServiceManager.getService(Context.STATUS_BAR_SERVICE));
@@ -421,6 +432,14 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
             } catch (RemoteException e) {
                 // end of the world
             }
+        }
+    }
+
+    void setLockedScreenOrientation(boolean locked) {
+        if (locked) {
+            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+        } else {
+            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
     }
 
@@ -453,14 +472,6 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         }
 
         return adjustedRect;
-    }
-
-    void setLockedScreenOrientation(boolean locked) {
-        if (locked) {
-            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
-        } else {
-            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
-        }
     }
 
     /**
@@ -513,15 +524,6 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
             mScreenshotSelectorView.setVisibility(View.VISIBLE);
             mScreenshotSelectorView.requestFocus();
         });
-    }
-
-    void hideScreenshotSelector() {
-        setLockedScreenOrientation(false);
-        mWindowManager.removeView(mScreenshotLayout);
-        mScreenshotSelectorView.stopSelection();
-        mScreenshotSelectorView.setVisibility(View.GONE);
-        mCaptureButton.setVisibility(View.GONE);
-        setBlockedGesturalNavigation(false);
     }
 
     /**
@@ -1228,6 +1230,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         mActionsContainer.setTranslationY(0);
         mActionsContainerBackground.setTranslationY(0);
         mScreenshotPreview.setTranslationY(0);
+        hideScreenshotSelector();
     }
 
     private void setAnimatedViewSize(int width, int height) {
