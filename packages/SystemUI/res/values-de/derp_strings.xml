@@ -225,4 +225,13 @@
     <string name="sensor_privacy_mode_tile">Sensoren</string>
     <string name="quick_settings_on">Aktiviert</string>
     <string name="quick_settings_off">Deaktiviert</string>
+
+    <!-- Gaming mode -->
+    <string name="gaming_mode_not_enabled">Spielemodus ist deaktiviert</string>
+    <string name="gaming_mode_enabled">Spielemodus ist aktiviert</string>
+    <string name="quick_settings_gaming_mode_label">Spielemodus</string>
+    <!-- Content description of the Gaming mode tile in quick settings when disabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_disabled">Spielemodus deaktiviert.</string>
+    <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_enabled">Spielemodus aktiviert.</string>
 </resources>
