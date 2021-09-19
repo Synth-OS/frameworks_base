@@ -105,7 +105,6 @@ public class PulseControllerImpl
     private boolean mKeyguardShowing;
     private boolean mQSShowing;
     private boolean mDozing;
-    private boolean mKeyguardGoingAway;
     private boolean mRenderLoadedOnce;
 
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -237,9 +236,7 @@ public class PulseControllerImpl
 
     public void notifyKeyguardGoingAway() {
         if (mLsPulseEnabled) {
-            mKeyguardGoingAway = true;
-            updatePulseVisibility(false);
-            mKeyguardGoingAway = false;
+            detachPulseFrom(getLsVisualizer(), allowNavPulse(getNavbarFrame())/*keep linked*/);
         }
     }
 
@@ -253,25 +250,13 @@ public class PulseControllerImpl
 
         NavigationBarFrame nv = getNavbarFrame();
         VisualizerView vv = getLsVisualizer();
-        boolean allowAmbPulse = vv != null && vv.isAttached()
-                && !forceStop
-                && mAmbPulseEnabled && mKeyguardShowing && mDozing;
-        boolean allowLsPulse = vv != null && vv.isAttached()
-                && !forceStop
-                && mLsPulseEnabled && mKeyguardShowing && !mDozing;
-        boolean allowQsPulse = vv != null && vv.isAttached()
-                && !forceStop
-                && mQsPulseEnabled && mQSShowing && !mDozing;
-        boolean allowNavPulse = nv!= null && nv.isAttached()
-                && !forceStop && mNavPulseEnabled && !mKeyguardShowing;
-
-        if (mKeyguardGoingAway) {
-            detachPulseFrom(vv, allowNavPulse/*keep linked*/);
-            return;
-        }
+        boolean allowAmbPulse = !forceStop && allowAmbPulse(vv);
+        boolean allowLsPulse = !forceStop && allowLsPulse(vv);
+        boolean allowQsPulse = !forceStop && allowQsPulse(vv);
+        boolean allowNavPulse = !forceStop && allowNavPulse(nv);
 
         if (!allowNavPulse) {
-            detachPulseFrom(nv, allowLsPulse || allowAmbPulse || allowQsPulse/*keep linked*/);
+            detachPulseFrom(nv, allowLsPulse/*keep linked*/);
         }
         if (!allowLsPulse && !allowAmbPulse && !allowQsPulse) {
             detachPulseFrom(vv, allowNavPulse/*keep linked*/);
@@ -325,6 +310,26 @@ public class PulseControllerImpl
 
     private VisualizerView getLsVisualizer() {
         return mStatusbar != null ? mStatusbar.getLsVisualizer() : null;
+    }
+
+    private boolean allowAmbPulse(VisualizerView v) {
+        if (v == null) return false;
+        return v.isAttached() && mAmbPulseEnabled && mKeyguardShowing && !mDozing;
+    }
+
+    private boolean allowLsPulse(VisualizerView v) {
+        if (v == null) return false;
+        return v.isAttached() && mLsPulseEnabled && mKeyguardShowing && !mDozing;
+    }
+
+    private boolean allowQsPulse(VisualizerView v) {
+        if (v == null) return false;
+        return v.isAttached() && mQsPulseEnabled && mQSShowing && !mDozing;
+    }
+
+    private boolean allowNavPulse(NavigationBarFrame v) {
+        if (v == null) return false;
+        return v.isAttached() && mNavPulseEnabled && !mKeyguardShowing;
     }
 
     @Inject
