@@ -77,6 +77,7 @@ import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -203,6 +204,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mEnableVolumePanelTint;
     private ViewStub mODICaptionsTooltipViewStub;
     private View mODICaptionsTooltipView = null;
+    private boolean mHasAlertSlider;
     private TunerService mTunerService;
 
     private boolean mShowAppVolume;
@@ -260,6 +262,8 @@ public class VolumeDialogImpl implements VolumeDialog,
         mShowActiveStreamOnly = showActiveStreamOnly();
         mHasSeenODICaptionsTooltip = true;
         mDevicePanelOnLeft = mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide);
+        mHasAlertSlider = mContext.getResources().getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
+
         mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
         mCustomSettingsObserver.observe();
         mCustomSettingsObserver.update();
@@ -1766,6 +1770,7 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (mRow.ss == null) return;
             rescheduleTimeoutH();
             if (D.BUG) Log.d(TAG, AudioSystem.streamToString(mRow.stream)
                     + " onProgressChanged " + progress + " fromUser=" + fromUser);
@@ -1774,7 +1779,13 @@ public class VolumeDialogImpl implements VolumeDialog,
                 mController.getAudioManager().setAppVolume(mRow.packageName, progress * 0.01f);
                 return;
             }
-            if (mRow.ss == null) return;
+	        if ((mRow.stream == STREAM_RING || mRow.stream == STREAM_NOTIFICATION) && mHasAlertSlider) {
+                if (mRow.ss.muted) {
+                    seekBar.setProgress(0);
+                    return;
+                }
+            }
+            if (!fromUser) return;
             if (mRow.ss.levelMin > 0) {
                 final int minProgress = mRow.ss.levelMin * 100;
                 if (progress < minProgress) {
@@ -1783,6 +1794,14 @@ public class VolumeDialogImpl implements VolumeDialog,
                 }
             }
             final int userLevel = getImpliedLevel(seekBar, progress);
+	        if ((mRow.stream == STREAM_RING || mRow.stream == STREAM_NOTIFICATION) && mHasAlertSlider) {
+                if (mRow.ss.level > mRow.ss.levelMin && userLevel == 0) {
+                    seekBar.setProgress((mRow.ss.levelMin + 1) * 100);
+                    Util.setText(mRow.header,
+                            Utils.formatPercentage(mRow.ss.levelMin + 1, mRow.ss.levelMax));
+                    return;
+                }
+            }
             if (mRow.ss.level != userLevel || mRow.ss.muted && userLevel > 0) {
                 mRow.userAttempt = SystemClock.uptimeMillis();
                 if (mRow.requestedLevel != userLevel) {
